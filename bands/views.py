@@ -1,12 +1,20 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
 from bands.models import Musician, Band, Venue
-from .forms import MusicianForm # Asegúrate de crear este archivo primero
+from .forms import MusicianForm
 
 # --- VISTAS DE LECTURA (LISTADOS) ---
 
 def musicians(request):
-    """Listado de músicos con paginación dinámica."""
+    """
+    Listado de músicos con paginación dinámica.
+
+    Args:
+        request: HttpRequest object.
+
+    Returns:
+        HttpResponse: Rendered page with list of musicians.
+    """
     all_musicians = Musician.objects.all().order_by('last_name')
     
     # Actividad: permitir cambiar objetos por página vía URL (?per_page=5)
@@ -22,17 +30,42 @@ def musicians(request):
     })
 
 def musician(request, musician_id):
-    """Detalle individual de un músico."""
+    """
+    Detalle individual de un músico.
+
+    Args:
+        request: HttpRequest object.
+        musician_id: ID of the musician to retrieve.
+
+    Returns:
+        HttpResponse: Rendered page with musician details.
+    """
     musician_obj = get_object_or_404(Musician, id=musician_id)
     return render(request, "musician.html", {"musician": musician_obj})
 
 def bands(request):
-    """Listado de bandas (Relación Muchos a Muchos)."""
+    """
+    Listado de bandas (Relación Muchos a Muchos).
+
+    Args:
+        request: HttpRequest object.
+
+    Returns:
+        HttpResponse: Rendered page with list of bands.
+    """
     all_bands = Band.objects.all().order_by('name')
     return render(request, "bands.html", {"bands": all_bands})
 
 def venues(request):
-    """Listado de locales y salas (Relación Inversa)."""
+    """
+    Listado de locales y salas (Relación Inversa).
+
+    Args:
+        request: HttpRequest object.
+
+    Returns:
+        HttpResponse: Rendered page with list of venues.
+    """
     all_venues = Venue.objects.all().order_by('name')
     return render(request, "venues.html", {"venues": all_venues})
 
@@ -40,7 +73,15 @@ def venues(request):
 # --- VISTAS DE CREACIÓN (FORMULARIOS) ---
 
 def musician_add(request):
-    """Formulario para agregar un músico nuevo."""
+    """
+    Formulario para agregar un músico nuevo.
+
+    Args:
+        request: HttpRequest object.
+
+    Returns:
+        HttpResponse: Rendered page with the add musician form.
+    """
     if request.method == 'POST':
         form = MusicianForm(request.POST)
         if form.is_valid():
