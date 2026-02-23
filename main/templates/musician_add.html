@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Agregar Nuevo Músico</h1>
+<form method="post">
+    {% csrf_token %} {{ form.as_p }}
+    <button type="submit">Guardar Músico</button>
+</form>
+<br>
+<a href="{% url 'musicians' %}">Cancelar</a>
+{% endblock %}

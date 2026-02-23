@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Locales y sus Salas</h1>
+<ul>
+    {% for venue in venues %}
+    <li>
+        <strong>{{ venue.name }}</strong>
+        <ul>
+            {% for room in venue.room_set.all %} <li>{{ room.name }}</li>
+            {% empty %}
+                <li>Este local no tiene salas registradas.</li>
+            {% endfor %}
+        </ul>
+    </li>
+    {% empty %}
+    <li>No hay locales en la base de datos.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

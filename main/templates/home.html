@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inicio - RiffMates</title>
+    <style>
+        nav ul { list-style: none; padding: 0; display: flex; gap: 15px; background: #f4f4f4; padding: 10px; }
+        nav a { text-decoration: none; color: blue; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="{% url 'musicians' %}">Músicos</a></li>
+            <li><a href="{% url 'bands' %}">Bandas</a></li>
+            <li><a href="{% url 'venues' %}">Locales (Venues)</a></li>
+        </ul>
+    </nav>
+
+    <h1>Hola {{ nombre }}</h1>
+    <p>Este contenido viene de Django Templates</p>
+
+    <hr>
+    
+    {% for post in posts %}
+        <h2>{{ post.titulo }}</h2>
+        <p>{{ post.contenido }}</p>
+        <hr>
+    {% empty %}
+        <p>No hay publicaciones disponibles.</p>
+    {% endfor %}
+</body>
+</html>
