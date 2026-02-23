@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Perfil de {{ musician.first_name }} {{ musician.last_name }}{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>{{ musician.first_name }} {{ musician.last_name }}</h1>
+    <p><strong>Fecha de nacimiento:</strong> {{ musician.birth }}</p>
+
+    <h2>Bandas</h2>
+    {% if musician.band_set.all %}
+        <ul>
+        {% for band in musician.band_set.all %}
+            <li>{{ band.name }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>Este músico no pertenece a ninguna banda registrada.</p>
+    {% endif %}
+
+    <a href="{% url 'musicians' %}" class="btn btn-secondary">Volver al listado</a>
+</div>
+{% endblock %}

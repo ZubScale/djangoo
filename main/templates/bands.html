@@ -1,32 +1,25 @@
 {% extends "base.html" %}
 
-{% block title %}
-{{ block.super }}: Musician Listing [cite: 667]
-{% endblock %}
+{% block title %}Bandas - RiffMates{% endblock %}
 
 {% block content %}
-<h1>Musicians</h1> [cite: 670]
-<ul>
-    {% for musician in musicians %} [cite: 672]
-    <li>
-        <a href="{% url 'musician' musician.id %}"> [cite: 673]
-            {{ musician.last_name }}, {{ musician.first_name }} [cite: 674]
-        </a>
-    </li>
-    {% empty %} [cite: 676]
-    <li><i>No musicians in the database</i></li> [cite: 677]
-    {% endfor %}
-</ul>
+    <h1>Listado de Bandas</h1>
 
-{% if page.has_other_pages %} [cite: 735]
-    {% if page.has_previous %} [cite: 736]
-    <a href="{% url 'musicians' %}?page={{ page.previous_page_number }}">Prev</a> [cite: 737]
-    &nbsp;&nbsp;&nbsp;
-    {% endif %}
-
-    {% if page.has_next %} [cite: 740]
-    <a href="{% url 'musicians' %}?page={{ page.next_page_number }}">Next</a> [cite: 741]
-    {% endif %}
-{% endif %}
-
-{% endblock content %}
+    <div class="grid">
+        {% for band in bands %}
+        <div class="card">
+            <h3>{{ band.name }}</h3>
+            <p><strong>Miembros:</strong></p>
+            <ul>
+                {% for musician in band.musicians.all %}
+                <li><a href="{% url 'musician' musician.id %}">{{ musician.first_name }} {{ musician.last_name }}</a></li>
+                {% empty %}
+                <li>Sin miembros registrados.</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% empty %}
+        <p>No hay bandas registradas.</p>
+        {% endfor %}
+    </div>
+{% endblock %}

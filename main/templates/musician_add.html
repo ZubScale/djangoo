@@ -1,11 +1,34 @@
 {% extends "base.html" %}
 
+{% block title %}Agregar Músico - RiffMates{% endblock %}
+
 {% block content %}
-<h1>Agregar Nuevo Músico</h1>
-<form method="post">
-    {% csrf_token %} {{ form.as_p }}
-    <button type="submit">Guardar Músico</button>
-</form>
-<br>
-<a href="{% url 'musicians' %}">Cancelar</a>
+<div class="card" style="max-width: 600px; margin: 0 auto;">
+    <h1>Agregar Nuevo Músico</h1>
+    <p>Completa el formulario para registrar un nuevo músico en la plataforma.</p>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {% for field in form %}
+            <div style="margin-bottom: 15px;">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.help_text %}
+                    <small style="color: grey">{{ field.help_text }}</small>
+                {% endif %}
+                {% for error in field.errors %}
+                    <p style="color: red">{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <button type="submit">Guardar Músico</button>
+    </form>
+
+    <br>
+    <div style="text-align: center;">
+        <a href="{% url 'musicians' %}" style="text-decoration: none; color: #333;">Cancelar</a>
+    </div>
+</div>
 {% endblock %}

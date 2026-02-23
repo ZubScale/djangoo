@@ -1,32 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Inicio - RiffMates</title>
-    <style>
-        nav ul { list-style: none; padding: 0; display: flex; gap: 15px; background: #f4f4f4; padding: 10px; }
-        nav a { text-decoration: none; color: blue; font-weight: bold; }
-    </style>
-</head>
-<body>
-    <nav>
-        <ul>
-            <li><a href="{% url 'musicians' %}">Músicos</a></li>
-            <li><a href="{% url 'bands' %}">Bandas</a></li>
-            <li><a href="{% url 'venues' %}">Locales (Venues)</a></li>
-        </ul>
-    </nav>
+{% extends "base.html" %}
 
-    <h1>Hola {{ nombre }}</h1>
-    <p>Este contenido viene de Django Templates</p>
+{% block title %}Inicio - RiffMates{% endblock %}
 
-    <hr>
-    
+{% block content %}
+<div style="text-align: center; margin-bottom: 40px;">
+    <h1>Bienvenido a RiffMates</h1>
+    <p>La plataforma para conectar músicos, bandas y locales.</p>
+</div>
+
+<h2>Últimos Posts</h2>
+<div class="grid">
     {% for post in posts %}
-        <h2>{{ post.titulo }}</h2>
-        <p>{{ post.contenido }}</p>
-        <hr>
+    <div class="card">
+        <h3>{{ post.titulo }}</h3>
+        <p>{{ post.contenido|truncatewords:20 }}</p>
+        <p><small>Publicado: {{ post.fecha_creacion }}</small></p>
+    </div>
     {% empty %}
-        <p>No hay publicaciones disponibles.</p>
+    <p>No hay publicaciones recientes.</p>
     {% endfor %}
-</body>
-</html>
+</div>
+{% endblock %}
